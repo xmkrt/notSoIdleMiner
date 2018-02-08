@@ -10,6 +10,8 @@ TagManager:
   - ElevatorHouse
   - ShaftLeft
   - ShaftRight
+  - ElevatorManager
+  - WareHouseManager
   layers:
   - Default
   - TransparentFX

@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ButtonLevelWareHouse : MonoBehaviour {
+public class ButtonLevelWareHouse : MonoBehaviour, IPointerClickHandler
+{
 
     private WareHouse wareHouse;
-	private TextMesh levelText;
+    private TextMesh levelText;
     void Start()
     {
-		wareHouse = GetComponentInParent<WareHouse>();
-		levelText = GetComponentInChildren<TextMesh>();
+        wareHouse = GetComponentInParent<WareHouse>();
+        levelText = GetComponentInChildren<TextMesh>();
     }
 
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
-		wareHouse.LevelUp();
-		levelText.text = wareHouse.Level.ToString();
+        wareHouse.LevelUp();
+        levelText.text = wareHouse.Level.ToString();
     }
 }

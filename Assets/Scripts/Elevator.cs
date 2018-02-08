@@ -1,29 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Elevator : MonoBehaviour
+public class Elevator : Worker
 {
-    private float load;
     private int destinationLevel;
     private bool isGoingDown;
     private bool isGoingUp;
-    private bool isWorking;
     private bool isLoading;
     private bool isUnLoading;
     GameController myGameController;
     ElevatorHouse elevatorHouse;
     Vector2 startingPos;
+
+    Manager elevatorManager;
+
     void Start()
     {
         myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
         startingPos = transform.position;
+        elevatorManager = GameObject.FindGameObjectWithTag("ElevatorManager").GetComponent<Manager>();
     }
 
     void Update()
     {
-        if (isGoingDown)
+        if (elevatorManager.IsWorking && !isWorking)
+        {
+            Work();
+        }
+        else if (isGoingDown)
         {
             MoveDown();
         }
@@ -38,16 +45,6 @@ public class Elevator : MonoBehaviour
         else if (isUnLoading)
         {
             UnLoad();
-        }
-    }
-
-    void OnMouseDown()
-    {
-        if (!isWorking)
-        {
-            isWorking = true;
-            isGoingDown = true;
-            destinationLevel++;
         }
     }
 
@@ -124,5 +121,16 @@ public class Elevator : MonoBehaviour
     void OnTriggerEnter2D()
     {
         isUnLoading = true;
+    }
+
+    protected override void Work()
+    {
+        if (!isWorking)
+        {
+            isWorking = true;
+            isGoingDown = true;
+            destinationLevel++;
+        }
+
     }
 }

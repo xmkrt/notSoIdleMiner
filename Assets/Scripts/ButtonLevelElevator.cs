@@ -1,21 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ButtonLevelElevator : MonoBehaviour
+public class ButtonLevelElevator : MonoBehaviour, IPointerClickHandler
 {
-
     private ElevatorHouse elevatorHouse;
-	private TextMesh levelText;
+    private TextMesh levelText;
     void Start()
     {
-		elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
-		levelText = GetComponentInChildren<TextMesh>();
+        elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
+        levelText = GetComponentInChildren<TextMesh>();
     }
 
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
-		elevatorHouse.LevelUp();
-		levelText.text = elevatorHouse.Level.ToString();
+        elevatorHouse.LevelUp();
+        levelText.text = elevatorHouse.Level.ToString();
     }
 }

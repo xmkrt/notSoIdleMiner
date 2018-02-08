@@ -1,22 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ShaftWorker : MonoBehaviour
+public class ShaftWorker : Worker
 {
-    private bool isWorking;
     private bool isMining;
     private bool isWalkingRight;
     private bool isWalkingLeft;
-    private float load;
+
     Shaft parentShaft;
+    Manager manager;
+
     void Start()
     {
         parentShaft = GetComponentInParent<Shaft>();
+        manager = parentShaft.GetComponentInChildren<Manager>();
     }
 
     void Update()
     {
+        if (manager.IsWorking && !isWorking)
+        {
+            Work();
+        }
         if (isMining)
         {
             Mine();
@@ -72,8 +79,8 @@ public class ShaftWorker : MonoBehaviour
             isWalkingLeft = false;
         }
     }
-
-    void OnMouseDown()
+    
+    protected override void Work()
     {
         if (!isWorking)
         {

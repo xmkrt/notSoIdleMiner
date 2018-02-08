@@ -1,25 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class WareHouseWorker : MonoBehaviour
+public class WareHouseWorker : Worker
 {
-    private float load;
     private bool isWalkingRight;
     private bool isWalkingLeft;
     private bool isLoading;
-    private bool isWorking;
     private WareHouse parentWareHouse;
     private GameController myGameController;
     private ElevatorHouse elevatorHouse;
+    private Manager wareHouseManager;
+
     void Start()
     {
         parentWareHouse = GetComponentInParent<WareHouse>();
         myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
+        wareHouseManager = GameObject.FindGameObjectWithTag("WareHouseManager").GetComponent<Manager>();
     }
     void Update()
     {
+        if (wareHouseManager.IsWorking && !isWorking)
+        {
+            Work();
+        }
         if (isWalkingLeft)
         {
             WalkLeft();
@@ -31,14 +35,6 @@ public class WareHouseWorker : MonoBehaviour
         else if (isLoading)
         {
             Load();
-        }
-    }
-    void onMouseDown()
-    {
-        if (!isWorking)
-        {
-            isWorking = true;
-            isWalkingLeft = true;
         }
     }
 
@@ -84,8 +80,7 @@ public class WareHouseWorker : MonoBehaviour
         }
 
     }
-
-    void OnMouseDown()
+    protected override void Work()
     {
         if (!isWorking)
         {

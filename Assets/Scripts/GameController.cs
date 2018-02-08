@@ -57,6 +57,7 @@ public class GameController : MonoBehaviour
             shafts.Add(shaft);
             shaft.transform.position = new Vector2(shaft.transform.position.x, shaft.transform.position.y - shaftCount * shaftDistance);
             ShaftCount++;
+            shaft.GetComponent<Shaft>().Multi = shaftCount;
             shaft.GetComponent<Shaft>().SetMultiplier(ShaftCount);
         }
     }

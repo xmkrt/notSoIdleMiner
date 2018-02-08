@@ -10,7 +10,7 @@ public class ElevatorHouse : MonoBehaviour
     private float loadingSpeed = 5;
     private float maxCapacity = 20;
 
-    private int level; 
+    private int level = 1; 
     public float Cash
     {
         get
@@ -88,7 +88,7 @@ public class ElevatorHouse : MonoBehaviour
     public void LevelUp(){
         Level++;
         MovementSpeed += 0.02f;
-        MaxCapacity = Level*Level*10;
+        MaxCapacity = Level*Level*Level*10;
         LoadingSpeed = Level*Level*5;
     }
 }

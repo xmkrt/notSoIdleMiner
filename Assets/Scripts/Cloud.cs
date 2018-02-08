@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Cloud : MonoBehaviour
 {
@@ -14,7 +12,7 @@ public class Cloud : MonoBehaviour
     void Update()
     {
         transform.Translate(speed * Time.deltaTime * Vector2.left);
-        if (transform.position.x < -screenHalfWidth - 1f)
+        if (transform.position.x < -screenHalfWidth - 2f)
         {
             Destroy(gameObject);
         }

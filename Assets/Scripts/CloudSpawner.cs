@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//Just spawning some background clouds
 using UnityEngine;
 
 public class CloudSpawner : MonoBehaviour

@@ -68,22 +68,30 @@ public class Shaft : MonoBehaviour
         }
     }
 
+    public int Multi
+    {
+        get
+        {
+            return multi;
+        }
+
+        set
+        {
+            multi = value;
+        }
+    }
+
     void Start()
     {
         workers.Add(GetComponentInChildren<ShaftWorker>().gameObject);
-    }
-
-    void Update()
-    {
-
     }
 
     public void LevelUp()
     {
         Level++;
         WalkingSpeed += 0.02f;
-        MaxCapacity = Level * Level * 3 * multi;
-        MiningSpeed = Level * Level + multi;
+        MaxCapacity = Level * Level * 3 * Multi;
+        MiningSpeed = Level * Level + Multi;
         if (Level % 10 == 0)
         {
             AddWorker();

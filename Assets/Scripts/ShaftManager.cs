@@ -6,9 +6,9 @@ public class ShaftManager : Manager
 {
     private int miningSpeedBoost;
 
-    void Start()
+    protected override void  Start()
     {
-
+        base.Start();
     }
 
 
