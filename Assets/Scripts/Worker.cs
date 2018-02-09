@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// base class for ShaftWorker, Elevator and WareHouseWorker
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public abstract class Worker : MonoBehaviour, IPointerClickHandler

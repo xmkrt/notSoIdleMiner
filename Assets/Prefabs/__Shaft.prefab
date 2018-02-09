@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 222434194652920898}
   - component: {fileID: 114112810616042428}
   m_Layer: 0
-  m_Name: Shaft
+  m_Name: __Shaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

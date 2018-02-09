@@ -1,4 +1,4 @@
-﻿//Just spawning some background clouds
+﻿// spawning some background clouds
 using UnityEngine;
 
 public class CloudSpawner : MonoBehaviour

@@ -1,3 +1,5 @@
+//
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +12,7 @@ public class WareHouse : MonoBehaviour
     private List<GameObject> wareHouseWorkers = new List<GameObject>();
     [SerializeField]
     GameObject wareHouseWorkerObject;
-    private int level;
+    private int level = 1;
     public int Level
     {
         get
@@ -65,7 +67,6 @@ public class WareHouse : MonoBehaviour
 
     void Start()
     {
-        Level++;
         AddWorker();
     }
 

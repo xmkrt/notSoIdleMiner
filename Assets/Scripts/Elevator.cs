@@ -131,6 +131,5 @@ public class Elevator : Worker
             isGoingDown = true;
             destinationLevel++;
         }
-
     }
 }

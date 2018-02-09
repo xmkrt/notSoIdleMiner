@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// clouds just move from right to left
+using UnityEngine;
 
 public class Cloud : MonoBehaviour
 {

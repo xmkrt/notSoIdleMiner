@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,12 +43,6 @@ public class GameController : MonoBehaviour
         GameObject firstShaft = Instantiate(shaftGameObject, transform.GetChild(0).transform) as GameObject;
         shafts.Add(firstShaft);
         ShaftCount++;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void AddShaft()

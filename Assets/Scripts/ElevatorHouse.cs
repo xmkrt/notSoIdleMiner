@@ -9,7 +9,6 @@ public class ElevatorHouse : MonoBehaviour
     private float movementSpeed = 2f;
     private float loadingSpeed = 5;
     private float maxCapacity = 20;
-
     private int level = 1; 
     public float Cash
     {

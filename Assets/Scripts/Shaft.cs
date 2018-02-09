@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Shaft : MonoBehaviour
 {
-    //multiplier for shaftLevel
+    //stats for all workers of this shaft
     private int multi = 1;
     private float walkingSpeed = 1f;
     private float miningSpeed = 3f;
     private float maxCapacity = 10f;
+    //stats of this shaft
     private float cash;
     private int level = 1;
     [SerializeField]
     GameObject workerGameObject;
+    //unnecessary for now
     List<GameObject> workers = new List<GameObject>();
-    List<GameObject> managers = new List<GameObject>();
+
 
     public float MaxCapacity
     {
@@ -107,11 +109,6 @@ public class Shaft : MonoBehaviour
     public void UnLoad(float cash)
     {
         this.cash += cash;
-    }
-
-    public int getWorkers()
-    {
-        return workers.Count;
     }
 
     public float GetCash()

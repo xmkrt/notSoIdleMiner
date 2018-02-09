@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿// just displays all cash on UI
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿// Scrolling by moving the mouse to the edge of the screen
 using UnityEngine;
 
 public class SimpleCameraScroll : MonoBehaviour

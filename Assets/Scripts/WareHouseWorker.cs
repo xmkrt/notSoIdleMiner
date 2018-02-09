@@ -6,14 +6,14 @@ public class WareHouseWorker : Worker
     private bool isWalkingRight;
     private bool isWalkingLeft;
     private bool isLoading;
-    private WareHouse parentWareHouse;
+    private WareHouse wareHouse;
     private GameController myGameController;
     private ElevatorHouse elevatorHouse;
     private Manager wareHouseManager;
 
     void Start()
     {
-        parentWareHouse = GetComponentInParent<WareHouse>();
+        wareHouse = GetComponentInParent<WareHouse>();
         myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
         wareHouseManager = GameObject.FindGameObjectWithTag("WareHouseManager").GetComponent<Manager>();
@@ -40,19 +40,19 @@ public class WareHouseWorker : Worker
 
     void WalkRight()
     {
-        transform.Translate(Vector2.right * Time.deltaTime * parentWareHouse.WalkingSpeed);
+        transform.Translate(Vector2.right * Time.deltaTime * wareHouse.WalkingSpeed);
     }
 
     void WalkLeft()
     {
-        transform.Translate(Vector2.left * Time.deltaTime * parentWareHouse.WalkingSpeed);
+        transform.Translate(Vector2.left * Time.deltaTime * wareHouse.WalkingSpeed);
     }
 
     void Load()
     {
-        if (load <= parentWareHouse.MaxCapacity && elevatorHouse.Cash > 0)
+        if (load <= wareHouse.MaxCapacity && elevatorHouse.Cash > 0)
         {
-            float amount = Time.deltaTime * parentWareHouse.LoadingSpeed;
+            float amount = Time.deltaTime * wareHouse.LoadingSpeed;
             load += amount;
             elevatorHouse.RemoveCash(amount);
         }

@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class ButtonLevelWareHouse : MonoBehaviour, IPointerClickHandler
 {
-
     private WareHouse wareHouse;
     private TextMesh levelText;
     void Start()
