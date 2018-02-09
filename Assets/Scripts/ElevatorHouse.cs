@@ -12,67 +12,27 @@ public class ElevatorHouse : MonoBehaviour
     private int level = 1; 
     public float Cash
     {
-        get
-        {
-            return cash;
-        }
-
-        set
-        {
-            cash = value;
-        }
+        get { return cash; } set { cash = value; }
     }
 
     public float MovementSpeed
-    {
-        get
-        {
-            return movementSpeed;
-        }
-
-        set
-        {
-            movementSpeed = value;
-        }
+    {   
+        get { return movementSpeed; } set { movementSpeed = value; }
     }
 
     public float LoadingSpeed
-    {
-        get
-        {
-            return loadingSpeed;
-        }
-
-        set
-        {
-            loadingSpeed = value;
-        }
+    {  
+        get { return loadingSpeed; } set { loadingSpeed = value; }
     }
 
     public float MaxCapacity
     {
-        get
-        {
-            return maxCapacity;
-        }
-
-        set
-        {
-            maxCapacity = value;
-        }
+        get { return maxCapacity; } set { maxCapacity = value; }
     }
 
     public int Level
     {
-        get
-        {
-            return level;
-        }
-
-        set
-        {
-            level = value;
-        }
+        get { return level; } set { level = value; }
     }
 
     public void AddCash(float cash)
@@ -84,7 +44,8 @@ public class ElevatorHouse : MonoBehaviour
         this.Cash -= cash;
     }
 
-    public void LevelUp(){
+    public void LevelUp()
+    {
         Level++;
         MovementSpeed += 0.02f;
         MaxCapacity = Level*Level*Level*10;

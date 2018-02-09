@@ -15,54 +15,22 @@ public class WareHouse : MonoBehaviour
     private int level = 1;
     public int Level
     {
-        get
-        {
-            return level;
-        }
-
-        set
-        {
-            level = value;
-        }
+        get { return level; } set { level = value; }
     }
 
     public float WalkingSpeed
-    {
-        get
-        {
-            return walkingSpeed;
-        }
-
-        set
-        {
-            walkingSpeed = value;
-        }
+    {   
+        get { return walkingSpeed; } set { walkingSpeed = value; }
     }
 
     public float LoadingSpeed
     {
-        get
-        {
-            return loadingSpeed;
-        }
-
-        set
-        {
-            loadingSpeed = value;
-        }
+        get { return loadingSpeed; } set { loadingSpeed = value; }
     }
 
     public float MaxCapacity
     {
-        get
-        {
-            return maxCapacity;
-        }
-
-        set
-        {
-            maxCapacity = value;
-        }
+        get { return maxCapacity; } set { maxCapacity = value; }
     }
 
     void Start()

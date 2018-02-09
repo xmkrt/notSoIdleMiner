@@ -13,5 +13,4 @@ public abstract class Worker : MonoBehaviour, IPointerClickHandler
     }
 
     protected abstract void Work();
-
 }

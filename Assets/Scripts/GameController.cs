@@ -14,28 +14,12 @@ public class GameController : MonoBehaviour
     private int shaftCount;
     private float cash;
     public int ShaftCount
-    {
-        get
-        {
-            return shaftCount;
-        }
-
-        set
-        {
-            shaftCount = value;
-        }
+    {   
+        get { return shaftCount; } set { shaftCount = value; }
     }
     public float Cash
     {
-        get
-        {
-            return cash;
-        }
-
-        set
-        {
-            cash = value;
-        }
+        get { return cash; } set { cash = value; }
     }
 
     void Start()
@@ -47,7 +31,7 @@ public class GameController : MonoBehaviour
 
     public void AddShaft()
     {
-        if (shaftCount < 16)
+        if (shaftCount < 17)
         {
             GameObject shaft = Instantiate(shaftGameObject, transform.GetChild(0).transform) as GameObject;
             shafts.Add(shaft);

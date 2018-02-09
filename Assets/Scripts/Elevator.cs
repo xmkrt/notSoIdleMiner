@@ -10,7 +10,7 @@ public class Elevator : Worker
     private bool isGoingUp;
     private bool isLoading;
     private bool isUnLoading;
-    GameController myGameController;
+    GameController gameController;
     ElevatorHouse elevatorHouse;
     Vector2 startingPos;
 
@@ -18,7 +18,7 @@ public class Elevator : Worker
 
     void Start()
     {
-        myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
         startingPos = transform.position;
         elevatorManager = GameObject.FindGameObjectWithTag("ElevatorManager").GetComponent<Manager>();
@@ -50,7 +50,7 @@ public class Elevator : Worker
 
     void MoveDown()
     {
-        if (transform.position.y > myGameController.GetShaftPosition(destinationLevel))
+        if (transform.position.y > gameController.GetShaftPosition(destinationLevel))
         {
             transform.Translate(Vector2.down * elevatorHouse.MovementSpeed * Time.deltaTime);
         }
@@ -76,21 +76,24 @@ public class Elevator : Worker
     void Load()
     {
         //load cash if maxCapacity is not reached
-        if (myGameController.GetShaftCash(destinationLevel) > 0 && load < elevatorHouse.MaxCapacity)
+        if (gameController.GetShaftCash(destinationLevel) > 0 && load < elevatorHouse.MaxCapacity)
         {
+            print("1");
             float amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
             load += amount;
-            myGameController.SetShaftCash(destinationLevel, amount);
+            gameController.SetShaftCash(destinationLevel, amount);
         }
         //End of mine -> go up
-        else if (myGameController.ShaftCount == destinationLevel)
+        else if (gameController.ShaftCount == destinationLevel)
         {
+            print("2");
             isGoingUp = true;
             isLoading = false;
         }
         //go down if there is another shaft and maxCapacity not reached
-        else if (myGameController.GetShaftCash(destinationLevel) < myGameController.ShaftCount && load < elevatorHouse.MaxCapacity)
+        else if (gameController.GetShaftCash(destinationLevel) < gameController.ShaftCount && load < elevatorHouse.MaxCapacity)
         {
+            print("3");
             destinationLevel++;
             isGoingDown = true;
             isLoading = false;
@@ -98,6 +101,7 @@ public class Elevator : Worker
         //go up if maxCapacity is reached
         else if (load >= elevatorHouse.MaxCapacity)
         {
+            print("4");
             isLoading = false;
             isGoingUp = true;
             destinationLevel = 0;

@@ -10,18 +10,9 @@ public class Manager : MonoBehaviour, IPointerClickHandler
 
     public bool IsWorking
     {
-        get
-        {
-            return isWorking;
-        }
-
-        set
-        {
-            isWorking = value;
-        }
+        get { return isWorking; } set { isWorking = value; }
     }
-
-    protected virtual void Start()
+    void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }

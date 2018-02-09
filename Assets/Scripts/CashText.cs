@@ -1,4 +1,4 @@
-﻿// just displays all cash on UI
+﻿// just displays cummulated cash on UI
 using UnityEngine;
 using UnityEngine.UI;
 
