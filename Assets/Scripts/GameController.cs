@@ -1,4 +1,4 @@
-﻿
+﻿// basic game controller. All cash ends up here $$$
 
 using System.Collections;
 using System.Collections.Generic;
@@ -7,10 +7,11 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [SerializeField]
-    GameObject shaftGameObject;
-    List<GameObject> shafts = new List<GameObject>();
+    private GameObject shaftGameObject;
+    public List<GameObject> shafts = new List<GameObject>();
     [SerializeField]
     private float shaftDistance = 5;
+    //for nat having to use .Count all the time
     private int shaftCount;
     private float cash;
     public int ShaftCount
@@ -24,11 +25,10 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        GameObject firstShaft = Instantiate(shaftGameObject, transform.GetChild(0).transform) as GameObject;
-        shafts.Add(firstShaft);
-        ShaftCount++;
+        AddShaft();
     }
 
+    //adds a new shaft to the game
     public void AddShaft()
     {
         if (shaftCount < 17)

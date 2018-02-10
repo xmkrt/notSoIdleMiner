@@ -6,15 +6,16 @@ public class WareHouseWorker : Worker
     private bool isWalkingRight;
     private bool isWalkingLeft;
     private bool isLoading;
+    private bool isUnloading;
     private WareHouse wareHouse;
-    private GameController myGameController;
+    private GameController gameController;
     private ElevatorHouse elevatorHouse;
     private Manager wareHouseManager;
 
     void Start()
     {
         wareHouse = GetComponentInParent<WareHouse>();
-        myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
         wareHouseManager = GameObject.FindGameObjectWithTag("WareHouseManager").GetComponent<Manager>();
     }
@@ -35,6 +36,10 @@ public class WareHouseWorker : Worker
         else if (isLoading)
         {
             Load();
+        }
+        else if (isUnloading)
+        {
+            UnLoad();
         }
     }
 
@@ -68,10 +73,8 @@ public class WareHouseWorker : Worker
     {
         if (other.tag == "Warehouse")
         {
-            myGameController.AddCash(load);
-            load = 0;
             isWalkingRight = false;
-            isWorking = false;
+            isUnloading = true;
         }
         else if (other.tag == "ElevatorHouse")
         {
@@ -80,6 +83,23 @@ public class WareHouseWorker : Worker
         }
 
     }
+
+    private void UnLoad()
+    {
+        if (load > 0)
+        {
+            float amount = Time.deltaTime * wareHouse.LoadingSpeed;
+            load -= amount;
+            gameController.AddCash(amount);
+        }
+        else
+        {
+            load = 0;
+            isUnloading = false;
+            isWorking = false;
+        }
+    }
+
     protected override void Work()
     {
         if (!isWorking)

@@ -78,7 +78,6 @@ public class Elevator : Worker
         //load cash if maxCapacity is not reached
         if (gameController.GetShaftCash(destinationLevel) > 0 && load < elevatorHouse.MaxCapacity)
         {
-            print("1");
             float amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
             load += amount;
             gameController.SetShaftCash(destinationLevel, amount);
@@ -86,14 +85,12 @@ public class Elevator : Worker
         //End of mine -> go up
         else if (gameController.ShaftCount == destinationLevel)
         {
-            print("2");
             isGoingUp = true;
             isLoading = false;
         }
         //go down if there is another shaft and maxCapacity not reached
         else if (gameController.GetShaftCash(destinationLevel) < gameController.ShaftCount && load < elevatorHouse.MaxCapacity)
         {
-            print("3");
             destinationLevel++;
             isGoingDown = true;
             isLoading = false;
@@ -101,7 +98,6 @@ public class Elevator : Worker
         //go up if maxCapacity is reached
         else if (load >= elevatorHouse.MaxCapacity)
         {
-            print("4");
             isLoading = false;
             isGoingUp = true;
             destinationLevel = 0;
@@ -122,9 +118,12 @@ public class Elevator : Worker
             isWorking = false;
         }
     }
-    void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        isUnLoading = true;
+        if (other.tag == "ElevatorHouse")
+        {
+            isUnLoading = true;
+        }        
     }
 
     protected override void Work()
