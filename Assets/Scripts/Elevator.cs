@@ -39,8 +39,8 @@ public class Elevator : Worker
             yield return null;
         }
         Decide();
-
     }
+
     IEnumerator MoveUp()
     {
         while (transform.position.y < upperPosition.y)
@@ -76,8 +76,8 @@ public class Elevator : Worker
     }
 
     IEnumerator Load()
-    {   
-        float amount  = 0f;  
+    {
+        float amount = 0f;
         while (load < elevatorHouse.MaxCapacity && gameController.GetShaftCash(destinationLevel) > amount)
         {
             amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
@@ -85,13 +85,13 @@ public class Elevator : Worker
             gameController.SetShaftCash(destinationLevel, amount);
             yield return null;
         }
-        
+
         Decide();
     }
 
     IEnumerator UnLoad()
     {
-        float amount  = 0f;
+        float amount = 0f;
         while (load > 0)
         {
             amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
@@ -100,9 +100,10 @@ public class Elevator : Worker
             yield return null;
         }
         destinationLevel = 0;
-        Invoke("Delay", 0.1f);      
+        Invoke("Delay", 0.1f);
 
     }
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "ElevatorHouse")
@@ -111,7 +112,8 @@ public class Elevator : Worker
         }
     }
 
-    private void Delay(){
+    private void Delay()
+    {
         isWorking = false;
     }
 

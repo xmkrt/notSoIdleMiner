@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class CashText : MonoBehaviour
 {
     private WareHouse wareHouse;
-    private Text cashText;
     
+    private Text cashText;
+
     void Start()
     {
         wareHouse = GameObject.FindGameObjectWithTag("WareHouse").GetComponent<WareHouse>();
