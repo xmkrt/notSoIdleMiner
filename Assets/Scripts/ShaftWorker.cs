@@ -6,7 +6,6 @@ public class ShaftWorker : Worker
     private bool isMining;
     private bool isWalkingRight;
     private bool isWalkingLeft;
-
     Shaft parentShaft;
     Manager manager;
 

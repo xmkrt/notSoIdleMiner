@@ -9,9 +9,8 @@ public class WareHouse : MonoBehaviour
     private float walkingSpeed = 1f;
     private float loadingSpeed = 2f;
     private float maxCapacity = 10f;
-    private List<GameObject> wareHouseWorkers = new List<GameObject>();
     [SerializeField]
-    GameObject wareHouseWorkerObject;
+    private GameObject wareHouseWorkerObject;
     private int level = 1;
     public int Level
     {
@@ -41,7 +40,6 @@ public class WareHouse : MonoBehaviour
     public void AddWorker()
     {
         GameObject worker = Instantiate(wareHouseWorkerObject, transform) as GameObject;
-        wareHouseWorkers.Add(worker);
     }
 
     public void LevelUp()

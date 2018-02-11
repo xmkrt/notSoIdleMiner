@@ -12,6 +12,7 @@ TagManager:
   - ShaftRight
   - ElevatorManager
   - WareHouseManager
+  - Stats
   layers:
   - Default
   - TransparentFX
