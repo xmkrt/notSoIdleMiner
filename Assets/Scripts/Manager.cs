@@ -7,11 +7,20 @@ public class Manager : MonoBehaviour, IPointerClickHandler
 
     private SpriteRenderer spriteRenderer;
 
-    public bool IsWorking { get; set; }
+    public bool IsWorking
+    {
+        get { return isWorking; }
+        set { isWorking = value; }
+    }
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    void Update()
+    {
+
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -1,17 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Elevator : Worker
 {
     private int destinationLevel;
-
-    private bool isGoingDown;
-
-    private bool isGoingUp;
-
-    private bool isLoading;
-
-    private bool isUnLoading;
 
     private GameController gameController;
 
@@ -35,46 +29,24 @@ public class Elevator : Worker
         {
             Work();
         }
-        else if (isGoingDown)
-        {
-            MoveDown();
-        }
-        else if (isGoingUp)
-        {
-            MoveUp();
-        }
-        else if (isLoading)
-        {
-            Decide();
-        }
-        else if (isUnLoading)
-        {
-            UnLoad();
-        }
     }
 
-    void MoveDown()
+    IEnumerator MoveDown()
     {
-        if (transform.position.y > gameController.GetShaftPosition(destinationLevel))
+        while (transform.position.y > gameController.GetShaftPosition(destinationLevel))
         {
             transform.Translate(Vector2.down * elevatorHouse.MovementSpeed * Time.deltaTime);
+            yield return null;
         }
-        else
-        {
-            isGoingDown = false;
-            isLoading = true;
-        }
+        Decide();
+
     }
-    void MoveUp()
+    IEnumerator MoveUp()
     {
-        if (transform.position.y <= upperPosition.y)
+        while (transform.position.y < upperPosition.y)
         {
             transform.Translate(Vector2.up * elevatorHouse.MovementSpeed * Time.deltaTime);
-        }
-        else
-        {
-            isGoingUp = false;
-            destinationLevel = 0;
+            yield return null;
         }
     }
 
@@ -83,58 +55,64 @@ public class Elevator : Worker
         //load cash if maxCapacity is not reached
         if (gameController.GetShaftCash(destinationLevel) > 0 && load < elevatorHouse.MaxCapacity)
         {
-            Load();
+            StartCoroutine(Load());
         }
         //End of mine -> go up
         else if (gameController.ShaftCount == destinationLevel)
         {
-            isGoingUp = true;
-            isLoading = false;
+            StartCoroutine(MoveUp());
         }
         //go down if there is another shaft and maxCapacity not reached
         else if (gameController.GetShaftCash(destinationLevel) < gameController.ShaftCount && load < elevatorHouse.MaxCapacity)
         {
             destinationLevel++;
-            isGoingDown = true;
-            isLoading = false;
+            StartCoroutine(MoveDown());
         }
         //go up if maxCapacity is reached
         else if (load >= elevatorHouse.MaxCapacity)
         {
-            isLoading = false;
-            isGoingUp = true;
-            destinationLevel = 0;
+            StartCoroutine(MoveUp());
         }
     }
 
-    private void Load()
-    {
-        float amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
-        load += amount;
-        gameController.SetShaftCash(destinationLevel, amount);
+    IEnumerator Load()
+    {   
+        float amount  = 0f;  
+        while (load < elevatorHouse.MaxCapacity && gameController.GetShaftCash(destinationLevel) > amount)
+        {
+            amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
+            load += amount;
+            gameController.SetShaftCash(destinationLevel, amount);
+            yield return null;
+        }
+        
+        Decide();
     }
 
-    void UnLoad()
+    IEnumerator UnLoad()
     {
-        if (load > 0)
+        float amount  = 0f;
+        while (load > 0)
         {
-            float amount;
             amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
             load -= amount;
             elevatorHouse.AddCash(amount);
+            yield return null;
         }
-        else
-        {
-            isUnLoading = false;
-            isWorking = false;
-        }
+        destinationLevel = 0;
+        Invoke("Delay", 0.1f);      
+
     }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "ElevatorHouse")
         {
-            isUnLoading = true;
+            StartCoroutine(UnLoad());
         }
+    }
+
+    private void Delay(){
+        isWorking = false;
     }
 
     protected override void Work()
@@ -142,8 +120,8 @@ public class Elevator : Worker
         if (!isWorking)
         {
             isWorking = true;
-            isGoingDown = true;
             destinationLevel++;
+            StartCoroutine(MoveDown());
         }
     }
 }

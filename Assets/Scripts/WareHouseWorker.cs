@@ -1,21 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class WareHouseWorker : Worker
 {
-    private bool isWalkingRight;
-
-    private bool isWalkingLeft;
-
-    private bool isLoading;
-
-    private bool isUnloading;
-
     private WareHouse wareHouse;
 
     private ElevatorHouse elevatorHouse;
-    
+
     private Manager wareHouseManager;
+
+    private bool stop;
 
     void Start()
     {
@@ -30,78 +26,61 @@ public class WareHouseWorker : Worker
         {
             Work();
         }
-        if (isWalkingLeft)
-        {
-            WalkLeft();
-        }
-        else if (isWalkingRight)
-        {
-            WalkRight();
-        }
-        else if (isLoading)
-        {
-            Load();
-        }
-        else if (isUnloading)
-        {
-            UnLoad();
-        }
     }
 
-    void WalkRight()
+    IEnumerator WalkRight()
     {
-        transform.Translate(Vector2.right * Time.deltaTime * wareHouse.MovementSpeed);
+        while (!stop)
+        {
+            transform.Translate(Vector2.right * Time.deltaTime * wareHouse.MovementSpeed);
+            yield return null;
+        }
+        stop = false;
+        StartCoroutine(UnLoad());
     }
 
-    void WalkLeft()
+    IEnumerator WalkLeft()
     {
-        transform.Translate(Vector2.left * Time.deltaTime * wareHouse.MovementSpeed);
+        while (!stop)
+        {
+            transform.Translate(Vector2.left * Time.deltaTime * wareHouse.MovementSpeed);
+            yield return null;
+        }
+        stop = false;
+        StartCoroutine(Load());
     }
 
-    void Load()
+    IEnumerator Load()
     {
-        if (load <= wareHouse.MaxCapacity && elevatorHouse.Cash > 0)
+        while (load <= wareHouse.MaxCapacity && elevatorHouse.Cash > 0)
         {
             float amount = Time.deltaTime * wareHouse.LoadingSpeed;
             load += amount;
             elevatorHouse.RemoveCash(amount);
+            yield return null;
         }
-        else
-        {
-            isLoading = false;
-            isWalkingRight = true;
-        }
+        StartCoroutine(WalkRight());
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "WareHouse")
+        if (other.tag == "WareHouse" || other.tag == "ElevatorHouse")
         {
-            isWalkingRight = false;
-            isUnloading = true;
+            stop = true;
         }
-        else if (other.tag == "ElevatorHouse")
-        {
-            isWalkingLeft = false;
-            isLoading = true;
-        }
-
     }
 
-    private void UnLoad()
+    IEnumerator UnLoad()
     {
-        if (load > 0)
+        while (load > 0)
         {
             float amount = Time.deltaTime * wareHouse.LoadingSpeed;
             load -= amount;
             wareHouse.Cash += amount;
+            yield return null;
         }
-        else
-        {
-            load = 0;
-            isUnloading = false;
-            isWorking = false;
-        }
+        load = 0;
+        isWorking = false;
     }
 
     protected override void Work()
@@ -109,7 +88,7 @@ public class WareHouseWorker : Worker
         if (!isWorking)
         {
             isWorking = true;
-            isWalkingLeft = true;
+            StartCoroutine(WalkLeft());
         }
     }
 }

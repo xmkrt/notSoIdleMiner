@@ -47,11 +47,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void AddCash(float cash)
-    {
-        this.Cash += cash;
-    }
-
     public float GetShaftPosition(int index)
     {
         return shafts[index - 1].transform.position.y;

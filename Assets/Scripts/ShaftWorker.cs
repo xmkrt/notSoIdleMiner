@@ -1,16 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ShaftWorker : Worker
 {
-    private bool isMining;
-
-    private bool isWalkingRight;
-
-    private bool isWalkingLeft;
 
     Shaft parentShaft;
-    
+
     Manager manager;
+
+    private bool stop;
 
     void Start()
     {
@@ -24,28 +23,28 @@ public class ShaftWorker : Worker
         {
             Work();
         }
-        if (isMining)
-        {
-            Mine();
-        }
-
-        if (isWalkingRight)
-        {
-            WalkRight();
-        }
-        else if (isWalkingLeft)
-        {
-            WalkLeft();
-        }
-    }
-    void WalkRight()
-    {
-        transform.Translate(Vector2.right * Time.deltaTime * parentShaft.MovementSpeed);
     }
 
-    void WalkLeft()
+    IEnumerator WalkRight()
     {
-        transform.Translate(Vector2.left * Time.deltaTime * parentShaft.MovementSpeed);
+        while (!stop)
+        {
+            transform.Translate(Vector2.right * Time.deltaTime * parentShaft.MovementSpeed);
+            yield return null;
+        }
+        stop = false;
+        StartCoroutine(Mine());
+    }
+
+    IEnumerator WalkLeft()
+    {
+        while (!stop)
+        {
+            transform.Translate(Vector2.left * Time.deltaTime * parentShaft.MovementSpeed);
+            yield return null;
+        }
+        stop = false;
+        UnLoad();
     }
 
     void UnLoad()
@@ -55,37 +54,28 @@ public class ShaftWorker : Worker
         load = 0;
     }
 
-    void Mine()
+    IEnumerator Mine()
     {
-        load += parentShaft.LoadingSpeed * Time.deltaTime;
-        if (load >= parentShaft.MaxCapacity)
+        while (load < parentShaft.MaxCapacity)
         {
-            load = parentShaft.MaxCapacity;
-            isMining = false;
-            isWalkingLeft = true;
+            load += parentShaft.LoadingSpeed * Time.deltaTime;
+            yield return null;
         }
+        load = parentShaft.MaxCapacity;
+        StartCoroutine(WalkLeft());
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "ShaftRight")
-        {
-            isMining = true;
-            isWalkingRight = false;
-        }
-        else if (other.tag == "ShaftLeft")
-        {
-            UnLoad();
-            isWalkingLeft = false;
-        }
+        stop = true;
     }
-    
+
     protected override void Work()
     {
         if (!isWorking)
         {
             isWorking = true;
-            isWalkingRight = true;
+            StartCoroutine(WalkRight());
         }
     }
 }

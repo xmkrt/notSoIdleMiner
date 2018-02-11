@@ -12,7 +12,7 @@ public class WareHouse : Structure
 
     public void AddWorker()
     {
-        GameObject worker = Instantiate(wareHouseWorkerObject, transform) as GameObject;
+        Instantiate(wareHouseWorkerObject, transform);
         movementSpeed = 1f;
         loadingSpeed = 2f;
         maxCapacity = 10f;
