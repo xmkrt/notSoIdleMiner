@@ -1,26 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Elevator : Worker
 {
     private int destinationLevel;
-    private bool isGoingDown;
-    private bool isGoingUp;
-    private bool isLoading;
-    private bool isUnLoading;
-    GameController gameController;
-    ElevatorHouse elevatorHouse;
-    Vector2 startingPos;
 
-    Manager elevatorManager;
+    private bool isGoingDown;
+
+    private bool isGoingUp;
+
+    private bool isLoading;
+
+    private bool isUnLoading;
+
+    private GameController gameController;
+
+    private ElevatorHouse elevatorHouse;
+
+    private Vector2 upperPosition;
+
+    private Manager elevatorManager;
 
     void Start()
     {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
-        startingPos = transform.position;
+        upperPosition = transform.position;
         elevatorManager = GameObject.FindGameObjectWithTag("ElevatorManager").GetComponent<Manager>();
     }
 
@@ -40,7 +45,7 @@ public class Elevator : Worker
         }
         else if (isLoading)
         {
-            Load();
+            Decide();
         }
         else if (isUnLoading)
         {
@@ -62,7 +67,7 @@ public class Elevator : Worker
     }
     void MoveUp()
     {
-        if (transform.position.y <= startingPos.y)
+        if (transform.position.y <= upperPosition.y)
         {
             transform.Translate(Vector2.up * elevatorHouse.MovementSpeed * Time.deltaTime);
         }
@@ -73,14 +78,12 @@ public class Elevator : Worker
         }
     }
 
-    void Load()
+    void Decide()
     {
         //load cash if maxCapacity is not reached
         if (gameController.GetShaftCash(destinationLevel) > 0 && load < elevatorHouse.MaxCapacity)
         {
-            float amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
-            load += amount;
-            gameController.SetShaftCash(destinationLevel, amount);
+            Load();
         }
         //End of mine -> go up
         else if (gameController.ShaftCount == destinationLevel)
@@ -103,6 +106,14 @@ public class Elevator : Worker
             destinationLevel = 0;
         }
     }
+
+    private void Load()
+    {
+        float amount = Time.deltaTime * elevatorHouse.LoadingSpeed;
+        load += amount;
+        gameController.SetShaftCash(destinationLevel, amount);
+    }
+
     void UnLoad()
     {
         if (load > 0)
@@ -123,7 +134,7 @@ public class Elevator : Worker
         if (other.tag == "ElevatorHouse")
         {
             isUnLoading = true;
-        }        
+        }
     }
 
     protected override void Work()

@@ -1,36 +1,9 @@
-//
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WareHouse : MonoBehaviour
+public class WareHouse : Structure
 {
-    private float walkingSpeed = 1f;
-    private float loadingSpeed = 2f;
-    private float maxCapacity = 10f;
     [SerializeField]
     private GameObject wareHouseWorkerObject;
-    private int level = 1;
-    public int Level
-    {
-        get { return level; } set { level = value; }
-    }
-
-    public float WalkingSpeed
-    {   
-        get { return walkingSpeed; } set { walkingSpeed = value; }
-    }
-
-    public float LoadingSpeed
-    {
-        get { return loadingSpeed; } set { loadingSpeed = value; }
-    }
-
-    public float MaxCapacity
-    {
-        get { return maxCapacity; } set { maxCapacity = value; }
-    }
 
     void Start()
     {
@@ -40,13 +13,16 @@ public class WareHouse : MonoBehaviour
     public void AddWorker()
     {
         GameObject worker = Instantiate(wareHouseWorkerObject, transform) as GameObject;
+        movementSpeed = 1f;
+        loadingSpeed = 2f;
+        maxCapacity = 10f;
     }
 
-    public void LevelUp()
+    public override void LevelUp()
     {
         Level++;
-        WalkingSpeed += 0.02f;
-        LoadingSpeed = Level*Level;
+        MovementSpeed += 0.02f;
+        LoadingSpeed = Level * Level;
         MaxCapacity = Level * Level * 3;
         if (Level % 20 == 0)
         {

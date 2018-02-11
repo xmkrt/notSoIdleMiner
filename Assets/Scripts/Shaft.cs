@@ -2,42 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shaft : MonoBehaviour
+public class Shaft : Structure
 {
-    //stats for all workers of this shaft
     private int multi = 1;
-    private float walkingSpeed = 1f;
-    private float miningSpeed = 3f;
-    private float maxCapacity = 10f;
-    //stats of this shaft
-    private float cash;
-    private int level = 1;
+
+    //offset for the worker Object
     private Vector3 offset = new Vector3(-1f, -0.2f, 0);
+
     [SerializeField]
     GameObject workerGameObject;
+    
     //unnecessary for now
     List<GameObject> workers = new List<GameObject>();
-
-    //properties
-    public float MaxCapacity
-    {
-        get { return maxCapacity; } set { maxCapacity = value; }
-    }
-
-    public float MiningSpeed
-    {
-        get { return miningSpeed; } set { miningSpeed = value; }
-    }
-
-    public float WalkingSpeed
-    {
-        get { return walkingSpeed; } set { walkingSpeed = value; }
-    }
-
-    public int Level
-    {
-        get { return level; } set { level = value; }
-    }
 
     public int Multi
     {
@@ -47,14 +23,18 @@ public class Shaft : MonoBehaviour
     void Start()
     {
         workers.Add(GetComponentInChildren<ShaftWorker>().gameObject);
+        movementSpeed = 1f;
+        maxCapacity = 10f;
+        loadingSpeed = 3f;
     }
 
-    public void LevelUp()
+    public override void LevelUp()
     {
         Level++;
-        WalkingSpeed += 0.02f;
+        MovementSpeed += 0.02f;
         MaxCapacity = Level * Level * 3 * Multi;
-        MiningSpeed = Level * Level + Multi;
+        LoadingSpeed = Level * Level + Multi;
+
         if (Level % 10 == 0)
         {
             AddWorker();
@@ -81,10 +61,4 @@ public class Shaft : MonoBehaviour
     {
         cash -= amount;
     }
-
-    public void SetMultiplier(int multi)
-    {
-
-    }
-
 }

@@ -1,12 +1,12 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ButtonLevelShaft : MonoBehaviour, IPointerClickHandler
 {
-
     private Shaft parentShaft;
+    
     private TextMesh levelText;
+
     void Start()
     {
         parentShaft = GetComponentInParent<Shaft>();

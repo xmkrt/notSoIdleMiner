@@ -4,16 +4,17 @@ using UnityEngine.UI;
 
 public class CashText : MonoBehaviour
 {
-    private GameController gameController;
+    private WareHouse wareHouse;
     private Text cashText;
+    
     void Start()
     {
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        wareHouse = GameObject.FindGameObjectWithTag("WareHouse").GetComponent<WareHouse>();
         cashText = GetComponent<Text>();
     }
 
     void Update()
     {
-        cashText.text = (Mathf.Round(gameController.Cash)).ToString();
+        cashText.text = (Mathf.Round(wareHouse.Cash)).ToString();
     }
 }

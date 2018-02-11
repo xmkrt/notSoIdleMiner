@@ -4,8 +4,10 @@ using UnityEngine;
 public class SimpleCameraScroll : MonoBehaviour
 {
     private Vector2 startingPos;
+    
     [SerializeField]
     private float scrollSpeed = 5f;
+
     void Start()
     {
         startingPos = transform.position;

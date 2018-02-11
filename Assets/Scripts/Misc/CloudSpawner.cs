@@ -5,6 +5,7 @@ public class CloudSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject cloudGameObject;
+    
     private float nextCloud;
 
     void Update()

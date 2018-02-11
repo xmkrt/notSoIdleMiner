@@ -2,53 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElevatorHouse : MonoBehaviour
+public class ElevatorHouse : Structure
 {
-
-    private float cash;
-    private float movementSpeed = 2f;
-    private float loadingSpeed = 5;
-    private float maxCapacity = 20;
-    private int level = 1; 
-    public float Cash
+    void Start()
     {
-        get { return cash; } set { cash = value; }
-    }
-
-    public float MovementSpeed
-    {   
-        get { return movementSpeed; } set { movementSpeed = value; }
-    }
-
-    public float LoadingSpeed
-    {  
-        get { return loadingSpeed; } set { loadingSpeed = value; }
-    }
-
-    public float MaxCapacity
-    {
-        get { return maxCapacity; } set { maxCapacity = value; }
-    }
-
-    public int Level
-    {
-        get { return level; } set { level = value; }
+        movementSpeed = 2f;
+        loadingSpeed = 5;
+        maxCapacity = 20;
     }
 
     public void AddCash(float cash)
     {
         this.Cash += cash;
     }
+    
     public void RemoveCash(float cash)
     {
         this.Cash -= cash;
     }
 
-    public void LevelUp()
+    public override void LevelUp()
     {
         Level++;
         MovementSpeed += 0.02f;
-        MaxCapacity = Level*Level*Level*10;
-        LoadingSpeed = Level*Level*5;
+        MaxCapacity = Level * Level * Level * 10;
+        LoadingSpeed = Level * Level * Level * 2;
     }
 }

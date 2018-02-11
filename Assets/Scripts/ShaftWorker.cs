@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class ShaftWorker : Worker
 {
     private bool isMining;
+
     private bool isWalkingRight;
+
     private bool isWalkingLeft;
+
     Shaft parentShaft;
+    
     Manager manager;
 
     void Start()
@@ -37,12 +40,12 @@ public class ShaftWorker : Worker
     }
     void WalkRight()
     {
-        transform.Translate(Vector2.right * Time.deltaTime * parentShaft.WalkingSpeed);
+        transform.Translate(Vector2.right * Time.deltaTime * parentShaft.MovementSpeed);
     }
 
     void WalkLeft()
     {
-        transform.Translate(Vector2.left * Time.deltaTime * parentShaft.WalkingSpeed);
+        transform.Translate(Vector2.left * Time.deltaTime * parentShaft.MovementSpeed);
     }
 
     void UnLoad()
@@ -54,7 +57,7 @@ public class ShaftWorker : Worker
 
     void Mine()
     {
-        load += parentShaft.MiningSpeed * Time.deltaTime;
+        load += parentShaft.LoadingSpeed * Time.deltaTime;
         if (load >= parentShaft.MaxCapacity)
         {
             load = parentShaft.MaxCapacity;

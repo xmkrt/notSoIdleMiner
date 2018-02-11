@@ -1,4 +1,4 @@
-﻿// basic game controller. All cash ends up here $$$
+﻿// basic game controller.
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,19 +8,25 @@ public class GameController : MonoBehaviour
 {
     [SerializeField]
     private GameObject shaftGameObject;
+
     public List<GameObject> shafts = new List<GameObject>();
+
     [SerializeField]
     private float shaftDistance = 5;
+    
     //for nat having to use .Count all the time
     private int shaftCount;
     private float cash;
+
     public int ShaftCount
-    {   
-        get { return shaftCount; } set { shaftCount = value; }
+    {
+        get { return shaftCount; }
+        set { shaftCount = value; }
     }
     public float Cash
     {
-        get { return cash; } set { cash = value; }
+        get { return cash; }
+        set { cash = value; }
     }
 
     void Start()
@@ -38,7 +44,6 @@ public class GameController : MonoBehaviour
             shaft.transform.position = new Vector2(shaft.transform.position.x, shaft.transform.position.y - shaftCount * shaftDistance);
             ShaftCount++;
             shaft.GetComponent<Shaft>().Multi = shaftCount;
-            shaft.GetComponent<Shaft>().SetMultiplier(ShaftCount);
         }
     }
 

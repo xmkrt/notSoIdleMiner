@@ -1,4 +1,3 @@
-// 
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,10 +7,8 @@ public class Manager : MonoBehaviour, IPointerClickHandler
 
     private SpriteRenderer spriteRenderer;
 
-    public bool IsWorking
-    {
-        get { return isWorking; } set { isWorking = value; }
-    }
+    public bool IsWorking { get; set; }
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();

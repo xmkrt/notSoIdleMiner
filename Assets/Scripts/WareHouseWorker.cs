@@ -4,21 +4,26 @@ using UnityEngine.EventSystems;
 public class WareHouseWorker : Worker
 {
     private bool isWalkingRight;
+
     private bool isWalkingLeft;
+
     private bool isLoading;
+
     private bool isUnloading;
+
     private WareHouse wareHouse;
-    private GameController gameController;
+
     private ElevatorHouse elevatorHouse;
+    
     private Manager wareHouseManager;
 
     void Start()
     {
         wareHouse = GetComponentInParent<WareHouse>();
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         elevatorHouse = GameObject.FindGameObjectWithTag("ElevatorHouse").GetComponent<ElevatorHouse>();
         wareHouseManager = GameObject.FindGameObjectWithTag("WareHouseManager").GetComponent<Manager>();
     }
+
     void Update()
     {
         if (wareHouseManager.IsWorking && !isWorking)
@@ -45,12 +50,12 @@ public class WareHouseWorker : Worker
 
     void WalkRight()
     {
-        transform.Translate(Vector2.right * Time.deltaTime * wareHouse.WalkingSpeed);
+        transform.Translate(Vector2.right * Time.deltaTime * wareHouse.MovementSpeed);
     }
 
     void WalkLeft()
     {
-        transform.Translate(Vector2.left * Time.deltaTime * wareHouse.WalkingSpeed);
+        transform.Translate(Vector2.left * Time.deltaTime * wareHouse.MovementSpeed);
     }
 
     void Load()
@@ -68,10 +73,9 @@ public class WareHouseWorker : Worker
         }
     }
 
-
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Warehouse")
+        if (other.tag == "WareHouse")
         {
             isWalkingRight = false;
             isUnloading = true;
@@ -90,7 +94,7 @@ public class WareHouseWorker : Worker
         {
             float amount = Time.deltaTime * wareHouse.LoadingSpeed;
             load -= amount;
-            gameController.AddCash(amount);
+            wareHouse.Cash += amount;
         }
         else
         {
